@@ -1,0 +1,14 @@
+backend/
+├─ app/
+│  ├─ main.py
+│  ├─ schemas.py
+│  ├─ model.py
+│  ├─ inference.py
+│  ├─ utils.py
+│  └─ settings.py
+├─ weights/
+│  └─ bestmodel.pth
+├─ uploads/
+├─ outputs/
+├─ requirements.txt
+└─ .env
