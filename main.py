@@ -1,11 +1,15 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from inference import run_inference
 
 app = FastAPI(title="Brain MRI Tumor Inference API")
 
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {
+        "status": "ok",
+        "message": "API is running"
+    }
 
 
 @app.post("/predict")
@@ -15,37 +19,37 @@ async def predict(
     t2: UploadFile = File(...),
     flair: UploadFile = File(...),
 ):
+    required_files = {
+        "t1": t1,
+        "t1ce": t1ce,
+        "t2": t2,
+        "flair": flair,
+    }
+
+    missing_files = [
+        name for name, uploaded_file in required_files.items()
+        if not uploaded_file.filename
+    ]
+
+    if missing_files:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Missing files: {', '.join(missing_files)}"
+        )
+
     try:
-        required_files = {
-            "t1": t1,
-            "t1ce": t1ce,
-            "t2": t2,
-            "flair": flair,
-        }
-
-        missing_files = [
-            name for name, uploaded_file in required_files.items()
-            if not uploaded_file.filename
-        ]
-
-        if missing_files:
-            raise HTTPException(
-                status_code=400,
-                detail=f"Missing files: {', '.join(missing_files)}"
-            )
+        result = await run_inference(required_files)
 
         return {
             "status": "ok",
-            "message": "Predict endpoint is available",
-            "received_files": {
-                "t1": t1.filename,
-                "t1ce": t1ce.filename,
-                "t2": t2.filename,
-                "flair": flair.filename,
-            }
+            "message": "Inference completed successfully",
+            "result": result
         }
 
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(
+            status_code=500,
+            detail=f"Inference failed: {str(e)}"
+        )
