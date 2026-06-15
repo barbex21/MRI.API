@@ -1,10 +1,11 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from inference import run_inference
+from schemas import HealthResponse, PredictResponse
 
 app = FastAPI(title="Brain MRI Tumor Inference API")
 
 
-@app.get("/health")
+@app.get("/health", response_model=HealthResponse)
 def health():
     return {
         "status": "ok",
@@ -12,16 +13,16 @@ def health():
     }
 
 
-@app.post("/predict")
+@app.post("/predict", response_model=PredictResponse)
 async def predict(
     t1: UploadFile = File(...),
-    t1ce: UploadFile = File(...),
+    t1gd: UploadFile = File(...),
     t2: UploadFile = File(...),
     flair: UploadFile = File(...),
 ):
     required_files = {
         "t1": t1,
-        "t1ce": t1ce,
+        "t1gd": t1gd,
         "t2": t2,
         "flair": flair,
     }
@@ -43,6 +44,12 @@ async def predict(
         return {
             "status": "ok",
             "message": "Inference completed successfully",
+            "received_files": {
+                "t1": t1.filename,
+                "t1gd": t1gd.filename,
+                "t2": t2.filename,
+                "flair": flair.filename,
+            },
             "result": result
         }
 
