@@ -16,23 +16,27 @@ async def predict(
     flair: UploadFile = File(...),
 ):
     try:
-        required = {
+        required_files = {
             "t1": t1,
             "t1ce": t1ce,
             "t2": t2,
             "flair": flair,
         }
 
-        missing = [name for name, file in required.items() if not file.filename]
-        if missing:
+        missing_files = [
+            name for name, uploaded_file in required_files.items()
+            if not uploaded_file.filename
+        ]
+
+        if missing_files:
             raise HTTPException(
                 status_code=400,
-                detail=f"Missing files: {', '.join(missing)}"
+                detail=f"Missing files: {', '.join(missing_files)}"
             )
 
         return {
             "status": "ok",
-            "message": "Predict endpoint is ready for model integration",
+            "message": "Predict endpoint is available",
             "received_files": {
                 "t1": t1.filename,
                 "t1ce": t1ce.filename,
