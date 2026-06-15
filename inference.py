@@ -4,7 +4,7 @@ import torch
 import numpy as np
 import nibabel as nib
 from fastapi import UploadFile
-from app.model import UNet3D
+from model import UNet3D
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 MODEL_PATH = "weights/bestmodel.pth"
