@@ -1,13 +1,14 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
-from typing import List
-from app.inference import run_inference
-from app.schemas import PredictResponse
+from inference import run_inference
+from schemas import PredictResponse
 
 app = FastAPI(title="Brain MRI Tumor Inference API")
+
 
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
 
 @app.post("/predict", response_model=PredictResponse)
 async def predict(
