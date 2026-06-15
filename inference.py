@@ -9,7 +9,7 @@ from model import UNet3D
 
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-MODEL_PATH = "weights/bestmodel.pth"
+MODEL_PATH = "bestmodel.pth"
 TARGET_SIZE = (96, 96, 96)
 UPLOAD_DIR = "uploads"
 
