@@ -1,6 +1,8 @@
+pillow
+pydicom
 fastapi
 uvicorn[standard]
 python-multipart
-pillow
-pydicom
+torch
 numpy
+nibabel
