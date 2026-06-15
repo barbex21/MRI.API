@@ -1,5 +1,6 @@
 import os
 import uuid
+from pathlib import Path
 import numpy as np
 import nibabel as nib
 import torch
@@ -9,7 +10,7 @@ from model import UNet3D
 
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-MODEL_PATH = "bestmodel.pth"
+MODEL_PATH = Path(__file__).resolve().parent / "best_model (3).pth"
 TARGET_SIZE = (96, 96, 96)
 UPLOAD_DIR = "uploads"
 
