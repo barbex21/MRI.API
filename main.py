@@ -4,6 +4,16 @@ from schemas import HealthResponse, PredictByCaseRequest, PredictResponse
 
 app = FastAPI(title="Brain MRI Tumor Inference API")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://lovable.dev",
+        "https://www.lovable.dev",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/health", response_model=HealthResponse)
 def health():
