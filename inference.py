@@ -58,20 +58,29 @@ def find_case_files(case_id: str) -> dict:
     candidates = {
         "t1": [
             CASES_DIR / f"{case_id}_T1.nii.gz",
+            CASES_DIR / f"{case_id}_T1.nii",
             CASES_DIR / f"{case_id}_t1.nii.gz",
+            CASES_DIR / f"{case_id}_t1.nii",
         ],
         "t1gd": [
             CASES_DIR / f"{case_id}_T1GD.nii.gz",
+            CASES_DIR / f"{case_id}_T1GD.nii",
             CASES_DIR / f"{case_id}_T1Gd.nii.gz",
+            CASES_DIR / f"{case_id}_T1Gd.nii",
             CASES_DIR / f"{case_id}_t1gd.nii.gz",
+            CASES_DIR / f"{case_id}_t1gd.nii",
         ],
         "t2": [
             CASES_DIR / f"{case_id}_T2.nii.gz",
+            CASES_DIR / f"{case_id}_T2.nii",
             CASES_DIR / f"{case_id}_t2.nii.gz",
+            CASES_DIR / f"{case_id}_t2.nii",
         ],
         "flair": [
             CASES_DIR / f"{case_id}_FLAIR.nii.gz",
+            CASES_DIR / f"{case_id}_FLAIR.nii",
             CASES_DIR / f"{case_id}_flair.nii.gz",
+            CASES_DIR / f"{case_id}_flair.nii",
         ],
     }
 
